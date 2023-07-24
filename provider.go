@@ -2,6 +2,7 @@ package home
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -52,14 +53,15 @@ func (h *Home) StartHandlers() {
 	for {
 		select {
 		case <-ticker.C:
-			for _, endpoint := range h.Endpoints {
+			for name, endpoint := range h.Endpoints {
 				for _, condition := range endpoint.Conditions {
 					if condition() {
 						// call method
 						_, err := CallHTTP(endpoint.Route, endpoint.Method)
 						if err != nil {
-							fmt.Printf("error calling function, err %v", err)
+							log.Printf("error calling function, err %v", err)
 						}
+						log.Printf("function with name %v called", name)
 						break
 					}
 				}
