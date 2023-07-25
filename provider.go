@@ -25,6 +25,14 @@ func NewHome() (Home, error) {
 	}, nil
 }
 
+func (h *Home) RegisterEndpoint(name string, endpoint Endpoint) error {
+
+	h.Endpoints[name] = endpoint
+
+	return nil
+}
+
+// Could use RegisterEndpoint("name", &HTTPEndpoint{})
 func (h *Home) RegisterHTTPEndpoint(name string, route string, method string, conditions ...func() bool) error {
 
 	h.Endpoints[name] = &HTTPEndpoint{
