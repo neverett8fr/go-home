@@ -29,3 +29,30 @@ type HTTPEndpoint struct {
 
 	Conditions []func() bool // tbd
 }
+
+func (h *HTTPEndpoint) ConditionMet() bool {
+
+	for _, f := range h.Conditions {
+		if f() {
+			return true
+		}
+	}
+
+	return false
+}
+func (h *HTTPEndpoint) ConditionAdd(conditions ...func() bool) error {
+
+	h.Conditions = append(h.Conditions, conditions...)
+
+	return nil
+}
+
+func (h *HTTPEndpoint) FunctionDo() error {
+	_, err := CallHTTP(h.Route, h.Method)
+	if err != nil {
+		return fmt.Errorf("error calling function, err %v", err)
+	}
+
+	return nil
+
+}
