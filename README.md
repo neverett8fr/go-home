@@ -8,7 +8,7 @@ This is a library to allow for __home__ automation, etc.
 func main() {
  home, _ := NewHome()
 
- home.RegisterEndpoint("endpoint1", "192.168....", "GET")
+ home.RegisterHTTPEndpoint("endpoint1", "192.168....", "GET")
  home.AddCondition("endpoint1", func() bool {
   return true
  })
